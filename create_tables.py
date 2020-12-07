@@ -25,7 +25,7 @@ def create_database():
     conn.set_session(autocommit=True)
     cur = conn.cursor()
     
-    print('Database sparkifydb created.')
+    print('\nDatabase sparkifydb created.')
     
     return cur, conn
 
@@ -50,7 +50,7 @@ def create_tables(cur, conn):
 
 def database_check(cur):
     print('\n-----------------------------------------')
-    print('  Created tables')
+    print('  Tables')
     print('-----------------------------------------')
     cur.execute(tables_check)
     for table in cur.fetchall():
