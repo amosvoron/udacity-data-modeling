@@ -78,6 +78,8 @@ songplay_table_insert = ("""
         DO NOTHING;
 """)
 
+# Note that ON CONFLICT we perform DO UPDATE
+# which will provide the last level in sequence
 user_table_insert = ("""
     INSERT INTO users
     (user_id, first_name, last_name, gender, level)
@@ -140,8 +142,8 @@ table_rowcount_check = ("""
 """)
 
 # ATTENTION
-#   With full dataset the left outer joins must be replaced by inner joins!
-#   (In our case of partial dataset the songs and artists only matches 1 row)
+#   With full dataset the left outer joins can be replaced by inner joins!
+#   In our case of partial dataset the songs and artists only matches 1 row.
 database_integrity_check = ("""
     SELECT COUNT(*) 
     FROM songplays AS A
@@ -149,6 +151,24 @@ database_integrity_check = ("""
     INNER JOIN time AS C ON A.start_time = C.start_time
     LEFT OUTER JOIN songs AS D ON A.song_id = D.song_id
     LEFT OUTER JOIN artists AS E ON A.artist_id = E.artist_id;
+""")
+
+create_foreign_keys = ("""
+    ALTER TABLE songs
+    ADD CONSTRAINT fk_songs_artists FOREIGN KEY(artist_id)
+    REFERENCES artists(artist_id);
+    
+    ALTER TABLE songplays
+    ADD CONSTRAINT fk_songplays_users FOREIGN KEY(user_id)
+    REFERENCES users(user_id);
+    
+    ALTER TABLE songplays
+    ADD CONSTRAINT fk_songplays_songs FOREIGN KEY(song_id)
+    REFERENCES songs(song_id);
+
+    ALTER TABLE songplays
+    ADD CONSTRAINT FK_songplays_artists FOREIGN KEY(artist_id)
+    REFERENCES artists(artist_id); 
 """)
 
 # QUERY LISTS
