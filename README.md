@@ -7,7 +7,7 @@ The data modeling is the foundation of database quality and proper data handling
 ## Installation
 ### Clone
 ```sh
-$ git clone https://github.com/amosvoron/sparkify-data-modeling.git
+$ git clone https://github.com/amosvoron/udacity-data-modeling.git
 ```
 
 ### Instructions
